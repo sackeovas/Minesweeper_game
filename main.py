@@ -26,28 +26,27 @@ CYAN = (0, 255, 255)
 BGCOLOR = GREY
 
 
-
+class Box:
 
 
 class Board:
     def __init__(self):
         self.board = []
         self.boardwidth = 3
-        self.boardheight = 2
+        self.boardheight = 3
         self.xmargin = (WINDOWWIDTH - (self.boardwidth * BOXSIZE)) // 2
         self.ymargin = (WINDOWHEIGHT - (self.boardheight * BOXSIZE)) // 2
         self.game_ended = False
 
-    def prepare_board(self):
-        self.game_ended = False
 
 
 
 
-    def card_is_revealed(self, coordinates):
+
+    def box_is_revealed(self, coordinates):
         return self.board[coordinates[0]][coordinates[1]].face_up
 
-    def get_card(self, coordinates):
+    def get_box(self, coordinates):
         return self.board[coordinates[0]][coordinates[1]]
 
 
@@ -93,7 +92,15 @@ def get_box_xy(game_board, coordinates):
     return None
 
 def draw_board(game_board):
-    pass
+    """Draw all of the boxes in their covered or revealed state."""
+    DISPLAY_SURFACE.fill(0, 0, 0)
+    for box in ((x, y) for x in range(game_board.boardwidth) for y in range(game_board.boardheight)):
+        left, top = get_left_top_coordinates(game_board, box)
+        if not game_board.box_is_revealed(box):  # Draw a covered box
+            pygame.draw.rect(DISPLAY_SURFACE, BGCOLOR, (left, top, BOXSIZE, BOXSIZE))
+        else:  # Draw the (revealed) icon
+            continue
+            #here will probably be revealed boxes´ looks - mines or numbers
 
 def end_screen(game_board):
     
