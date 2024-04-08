@@ -4,7 +4,8 @@ import sys, random, pygame
 from pygame.locals import *
 
 
-
+def main():
+    pass
     
 def terminate():
     """Exit the program."""
