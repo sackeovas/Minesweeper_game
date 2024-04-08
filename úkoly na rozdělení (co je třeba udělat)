@@ -1,0 +1,17 @@
+?možná, tímhle si nejsem jistá? Vytvořit třídu které budou udávat co je zobrazeno na tile(políčku) jestli mina nebo dané číslo, pojmenujme to třeba Picture a třídu Box což bude to jednotlivé políčko
+
+
+Definovat plochu Board (nejspíš jako class) na které se bude celá hra odehrávat, bude to jako při hře Sliding tiles, kterou jsme programovali. 
+Je třeba udělat mřížku, která se bude skládat z jednotlivých políček, na některých budou miny, na ostatních čísla udávající počet min v jejich
+nejbližším okolí. 
+        - Funkce, která náhodně rozmístí miny
+        - Funkce, která vytvoří startovací plochu (board), něco jako jsme měli draw_board()
+        - Funkce ktará zjistí kolik má dané políčko v okolí min a toto číslo bude mít na sobě napsané
+
+Hlavní funkce main
+        - vytvoří board (startovací plochu s náhodně rozhozenými minami)
+        - bude zjišťovat eventy (např. jestli uživatel kliknul na nějaké políčko nebo pohnul myší a kde se myš nacází - její souřadnice)
+        - dále bude obsahovat podmínku, která bude zjišťovat, zda políčko na které uživatel klikl je otočené, pokud ne, tak ho odhalí
+
+Funkce která nám vrátí souřadnice políčka
+
