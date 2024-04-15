@@ -32,13 +32,18 @@ class Box:
 class Board:
     def __init__(self):
         self.board = []
-        self.boardwidth = 3
-        self.boardheight = 3
+        self.boardwidth = 5
+        self.boardheight = 5
         self.xmargin = (WINDOWWIDTH - (self.boardwidth * BOXSIZE)) // 2
         self.ymargin = (WINDOWHEIGHT - (self.boardheight * BOXSIZE)) // 2
+        self.num_mines = 5    # Number of mines generated
         self.game_ended = False
 
-
+    def generate_mines(self):
+        positions = [(x, y) for x in range(self.boardwidth) for y in range(self.boardheight)]
+        mine_positions = random.sample(positions, self.num_mines)
+        for x, y in mine_positions:
+            self.grid[y][x] = 'X'    #Marks mines on the board
 
 
 
