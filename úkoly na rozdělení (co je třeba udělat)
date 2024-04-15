@@ -7,11 +7,27 @@ nejbližším okolí.
         - Funkce, která náhodně rozmístí miny
         - Funkce, která vytvoří startovací plochu (board), něco jako jsme měli draw_board()
         - Funkce ktará zjistí kolik má dané políčko v okolí min a toto číslo bude mít na sobě napsané
+        - First click - při prvním kliknutí se odhalí určitý radius políček, na kterých nejsou miny
 
 Hlavní funkce main
-        - vytvoří board (startovací plochu s náhodně rozhozenými minami)
+        - vytvoří board (startovací plochu s náhodně rozhozenými minami) - základní stav covered
         - bude zjišťovat eventy (např. jestli uživatel kliknul na nějaké políčko nebo pohnul myší a kde se myš nacází - její souřadnice)
         - dále bude obsahovat podmínku, která bude zjišťovat, zda políčko na které uživatel klikl je otočené, pokud ne, tak ho odhalí
 
 Funkce která nám vrátí souřadnice políčka
+
+Startovní obrazovka
+        instrukce na ovládání - levé tlačítko myši = vykopat
+                              - pravé tlačítko myši = označit (vlaječka)
+
+Game Over + play again / quit
+        - won
+        - lost
+
+?? kolik min na obrazovku (jakoby můžeme udělat víc úrovní, ale to nestihnem, takže optimalizovat tu jednu)
+
+Něco navíc - jedno spešl políčko na hrací ploše, na které když hráč klikne, hra zamrzne, spustí se časovač na pár vteřin a 
+musí stihnout kliknout na několik třeba čtverců co se náhodně vygenerují na obrazovce
+Když to nestihne - game over
+Stihne - hra pokračuje
 
