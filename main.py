@@ -26,7 +26,7 @@ CYAN = (0, 255, 255)
 BGCOLOR = GREY
 
 
-class Box:
+class Box: # funguje to iba bez box dovtedy kym ho budeme definovat
 
 
 class Board:
