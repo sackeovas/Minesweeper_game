@@ -1,0 +1,110 @@
+import pygame
+import random
+import sys
+
+WHITE = (255, 255, 255)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
+BLUE = (0, 0, 255)
+
+BOARD_SIZE = 5
+NUM_RED_SQUARES = 8
+
+class MiniGame:
+    def __init__(self):
+        self.width = 300
+        self.height = 300
+        self.screen = pygame.display.set_mode((self.width, self.height))
+        pygame.display.set_caption("Mini Game")
+        self.clock = pygame.time.Clock()
+
+        self.board = [[0] * BOARD_SIZE for _ in range(BOARD_SIZE)]
+        self.generate_green_square()  # Green square
+        self.timer_font = pygame.font.Font(None, 36)
+        self.clicked_squares = set()
+        self.red_squares = []
+        self.start_time = None
+
+    def generate_green_square(self):
+        self.green_square = random.randint(0, BOARD_SIZE - 1), random.randint(0, BOARD_SIZE - 1)  # Generates random position for green square
+
+    def generate_red_squares(self):
+        self.red_squares = random.sample([(x, y) for x in range(BOARD_SIZE) for y in range(BOARD_SIZE) if (x, y) != self.green_square], NUM_RED_SQUARES)  # Randomly selects positions for red squares
+
+    def draw_board(self):
+        self.screen.fill(WHITE)  
+        square_size = self.width // BOARD_SIZE  # Calculates size of each square
+        for x in range(BOARD_SIZE):
+            for y in range(BOARD_SIZE):
+                rect = pygame.Rect(x * square_size, y * square_size, square_size, square_size)
+                if (x, y) == self.green_square:
+                    pygame.draw.rect(self.screen, GREEN, rect)  # Draws green square
+                elif (x, y) in self.red_squares:
+                    pygame.draw.rect(self.screen, RED, rect)  # Draws red squares
+                elif (x, y) in self.clicked_squares:
+                    pygame.draw.rect(self.screen, BLUE, rect)  # Draws blue clicked squares
+                else:
+                    pygame.draw.rect(self.screen, WHITE, rect)  # Draws white empty squares
+        
+        # Draw the timer
+        if self.start_time is not None:
+            elapsed_time = (pygame.time.get_ticks() - self.start_time) // 1000
+            remaining_time = max(0, 10 - elapsed_time)
+            timer_text = self.timer_font.render(str(remaining_time), True, BLUE)
+            self.screen.blit(timer_text, (self.width - 50, 10))
+        
+        pygame.display.flip()  # Update the display
+
+    def start_timer(self):
+        self.start_time = pygame.time.get_ticks()  # Record the start time
+
+    def end_game(self, message):
+        print(message)  # Prints game over message
+        pygame.quit()  # Quits Pygame
+        sys.exit()  # Exits the program
+
+    def handle_click(self, pos):
+        # Calculate the size of each square
+        square_size = self.width // BOARD_SIZE
+        
+        # Map the clicked position to the grid coordinates
+        x, y = pos[0] // square_size, pos[1] // square_size
+        
+        # Check if the click is on the green square
+        if (x, y) == self.green_square:
+            # Generate red squares, initialize set to track clicked red squares, and start the timer
+            self.generate_red_squares()
+            self.start_timer()
+        elif (x, y) in self.red_squares:
+            # Check if the clicked square is a red square
+            if (x, y) not in self.clicked_squares:
+                self.clicked_squares.add((x, y))  # Add clicked red square to the set
+                self.red_squares.remove((x, y))  # Remove clicked red square from the list
+                self.draw_board()  # Update the display to change color to blue
+            if len(self.clicked_squares) == NUM_RED_SQUARES:
+                print("Nice!")  # If all red squares are clicked, player wins
+                pygame.quit()
+                sys.exit()
+        elif (x, y) in self.clicked_squares:
+            # If the square is already clicked, do nothing
+            pass
+        else:
+            print("Game over")  # If a non-red square is clicked, player loses
+            pygame.quit()
+            sys.exit()
+
+    def run(self):
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False  # Exits loop if window is closed
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    self.handle_click(pygame.mouse.get_pos())  # Handles mouse clicks
+            self.draw_board()  # Updates the display
+            self.clock.tick(60)  # Cap the frame rate to 60 FPS
+
+if __name__ == "__main__":
+    pygame.init() 
+    game = MiniGame()  
+    game.run()  
