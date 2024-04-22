@@ -26,7 +26,9 @@ CYAN = (0, 255, 255)
 BGCOLOR = GREY
 
 
-class Box: # funguje to iba bez box dovtedy kym ho budeme definovat
+class Box:
+    def __init__(self):
+        self.face_up = False 
 
 
 class Board:
